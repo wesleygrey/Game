@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <QList>
 
+extern Game* myGame;
+
 Bullet::Bullet()
 {
     setRect(0,0,10,10);
@@ -20,6 +22,7 @@ void Bullet::move()
         if(typeid(*(collision[pos])) == typeid(Enemy)){
             delete collision[pos];
             delete this;
+            myGame->score->update();
             return;
         }
     }
@@ -39,5 +42,18 @@ Enemy::Enemy()
 
 void Enemy::move()
 {
+    if(pos().y() > 800){
+        delete this;
+        myGame->health->update();
+        return;
+    }
+    QList<QGraphicsItem*> collision = collidingItems();
+    for(size_t pos = 0; pos != collision.size(); ++pos){
+        if(typeid(*(collision[pos])) == typeid(Player)){
+            delete this;
+            myGame->health->update();
+            return;
+        }
+    }
     setPos(x(), y()+5);
 }
