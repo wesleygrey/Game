@@ -1,5 +1,9 @@
-#include "Game.h"
+#include "game.h"
+#inlcude "player.h"
+#inlcude "movers.h"
 #include <QTimer>
+#include <QGRaphicsScene>
+#include <QGraphicsRectItem>
 
 Game::Game(QWidget *parent){
     //create a player
