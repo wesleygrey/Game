@@ -25,4 +25,12 @@ Game::Game(QWidget *parent){
     //make the player focusable and focus on it
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
+    
+    //spwan enemies at regular intervals
+    QTimer* eTimer = new QTimer;
+    QObject::connect(eTimer, SIGNAL(timeout()), player, SLOT(spawn()));
+    eTimer->start(2500);
+
+    setScene(myScene);
+    show();
     }
