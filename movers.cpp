@@ -26,6 +26,10 @@ void Bullet::move()
             return;
         }
     }
+    if(pos().y() < 0){
+        delete this;
+        return;
+    }
     setPos(x(), y() - 10);
 }
 
