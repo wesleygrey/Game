@@ -27,13 +27,12 @@ public slots:
     virtual void move();
 };
 
-class Money: public GameText{
+class Coin: public Movers{
+    Q_OBJECT
 public:
-    Money();
+    Coin();
 public slots:
-    virtual void update();
-private:
-    int cur_money;
+    virtual void move();
 };
 
 #endif // MOVERS_H
