@@ -79,10 +79,13 @@ void Game::launchGame()
     //create score and player health displays
     score = new Score;
     health = new Health;
+    money = new Money;
 
     myScene->addItem(score);
     myScene->addItem(health);
+    myScene->addItem(money);
     health->setPos(0, 25);
+    money->setPos(0,50);
 
     //spwan enemies at regular intervals
     QTimer* eTimer = new QTimer;
@@ -91,6 +94,77 @@ void Game::launchGame()
 
 
     show();
+}
+
+void Game::showRules()
+{
+    //clear the scene
+    myScene->clear();
+
+    //Create the text for the instructions, set font and position
+    QGraphicsTextItem* welcome = new QGraphicsTextItem("Welcome to Upgrader!");
+    QFont wFont = QFont("times", 32);
+    welcome->setFont(wFont);
+    int wxPos = rect().width()/2 - welcome->boundingRect().width()/2 ;
+    int wyPos = 20;
+    welcome->setPos(wxPos, wyPos);
+    myScene->addItem(welcome);
+
+    //create text briefly describing the game and it's controls
+    QGraphicsTextItem* intro = new QGraphicsTextItem("Upgrader is a upgrade-based shooter game"
+                                                     " in which nearly all\naspects of gameplay are upgradable.");
+    QGraphicsTextItem* controls = new QGraphicsTextItem("Use the spacebar to shoot a bullet.\n"
+                                                        "Use the arrow keys to move around.");
+    QGraphicsTextItem* rule1 = new QGraphicsTextItem("Enemies will spawn at the top of the screen. Shoot and"
+                                                     " avoid\nthem. You will lose health if they touch you or get by you.");
+    QGraphicsTextItem* rule2 = new QGraphicsTextItem("Coins will spawn at the left. Collect them to buy upgrades.\n"
+                                                     "Power-ups will spawn at the right.");
+    QGraphicsTextItem* rule3 = new QGraphicsTextItem("There are 5 levels. At the end of each level there is a boss.\n"
+                                                     "If you defeat it, you will be prompted to select new upgrades.");
+    QGraphicsTextItem* goodLuck = new QGraphicsTextItem("Good luck!");
+
+    //set the font for the texts
+    QFont rulesFont = QFont("times", 16);
+    intro->setFont(rulesFont);
+    controls->setFont(rulesFont);
+    rule1->setFont(rulesFont);
+    rule2->setFont(rulesFont);
+    rule3->setFont(rulesFont);
+    goodLuck->setFont(wFont);
+
+    //set positions of the texts
+    int rulesxPos= 10;
+    int spacing = 25;
+    int iyPos = wyPos + welcome->boundingRect().height() + spacing;
+    int cyPos = iyPos + intro->boundingRect().height() + spacing;
+    int r1yPos = cyPos + controls->boundingRect().height() + spacing;
+    int r2yPos = r1yPos + rule1->boundingRect().height() + spacing;
+    int r3yPos = r2yPos + rule2->boundingRect().height() + spacing;
+    int gLxPos = rect().width()/2 - goodLuck->boundingRect().width()/2;
+    int gLyPos = r3yPos + rule3->boundingRect().height() + spacing;
+
+    intro->setPos(rulesxPos, iyPos);
+    controls->setPos(rulesxPos, cyPos);
+    rule1->setPos(rulesxPos, r1yPos);
+    rule2->setPos(rulesxPos, r2yPos);
+    rule3->setPos(rulesxPos, r3yPos);
+    goodLuck->setPos(gLxPos, gLyPos);
+
+    //add rules to the scene
+    myScene->addItem(intro);
+    myScene->addItem(controls);
+    myScene->addItem(rule1);
+    myScene->addItem(rule2);
+    myScene->addItem(rule3);
+    myScene->addItem(goodLuck);
+
+    //create the back button
+    Button* back = new Button("Go Back");
+    int bxPos = 10;
+    int byPos = 10;
+    back->setPos(bxPos, byPos);
+    connect(back, SIGNAL(clicked()), this, SLOT(displayMainMenu()));
+    myScene->addItem(back);
 }
 
 void Game::level_up()
