@@ -33,3 +33,17 @@ void Health::update()
     cur_health -= 10;
     setPlainText(QString("HP :" + QString::number(cur_health)));
 }
+
+Money::Money()
+{
+    cur_money = 25;
+    setPlainText((QString("Money :" + QString::number(cur_money))));
+    setDefaultTextColor(Qt::darkYellow);
+    setFont(QFont("times", 16));
+}
+
+void Money::update()
+{
+    cur_money += 5;
+    setPlainText(QString("Money :" + QString::number(cur_money)));
+}
