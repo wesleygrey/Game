@@ -27,4 +27,13 @@ public slots:
     virtual void move();
 };
 
+class Money: public GameText{
+public:
+    Money();
+public slots:
+    virtual void update();
+private:
+    int cur_money;
+};
+
 #endif // MOVERS_H
