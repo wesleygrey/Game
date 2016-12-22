@@ -9,8 +9,8 @@ int main(int argc, char *argv[])
 
     myGame = new Game();
     myGame->show();
-    //myGame->displayMainMenu(); <--breaks...
-    myGame->launchGame();
+    myGame->displayMainMenu(); //fixed
+    //myGame->launchGame();
 
     return a.exec();
 }
