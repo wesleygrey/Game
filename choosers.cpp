@@ -10,8 +10,8 @@ Button::Button(QString *name, QGraphicsRectItem *parent): QGraphicsRectItem(pare
     setBrush(bColor);
 
     QGraphicsTextItem* bText = new QGraphicsTextItem(name, this);
-    int txPos = rect().width()/2 - text->boundingRect().width()/2;
-    int tyPos = rect().height()/2 - text->boundingRect().height()/2;
+    int txPos = rect().width()/2 - bText->boundingRect().width()/2;
+    int tyPos = rect().height()/2 - bText->boundingRect().height()/2;
     bText->setPos(txPos, tyPos);
 
     setAcceptHoverEvents(true);
