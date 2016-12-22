@@ -36,8 +36,16 @@ void Player::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void Player::spawn()
+void Player::spawnEnemy()
 {
+    //create a new Enemy and add it
     Enemy* nEnemy = new Enemy;
     scene()->addItem(nEnemy);
 }
+
+void Player::spawnCoin()
+{
+    Coin* nCoin = new Coin;
+    scene()->addItem(nCoin);
+}
+
