@@ -26,5 +26,13 @@ private:
     int cur_health;
 };
 
+class Money: public GameText{
+public:
+    Money();
+public slots:
+    virtual void update();
+private:
+    int cur_money;
+};
 
 #endif // GAMETEXT_H
