@@ -11,7 +11,8 @@ public:
 public slots:  
     //establishes movement and shooting abilities of the player
     void keyPressEvent(QKeyEvent* event);
-    void spawn();
+    void spawnEnemy();
+    void spawnCoin();
 };
 
 #endif PLAYER_H
