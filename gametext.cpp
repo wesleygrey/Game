@@ -1,6 +1,9 @@
 #include "gametext.h"
+#include "game.h"
 #include <QFont>
 #include <QGraphicsTextItem>
+
+extern Game* myGame;
 
 Score::Score(){//QGraphicsTextItem *parent): QGraphicsTextItem(parent){
     cur_score = 0;
@@ -32,6 +35,9 @@ void Health::update()
 {
     cur_health -= 10;
     setPlainText(QString("HP :" + QString::number(cur_health)));
+    if(cur_health == 0){
+        myGame->gameOver();
+    }
 }
 
 Money::Money()
