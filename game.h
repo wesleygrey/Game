@@ -23,6 +23,9 @@ public slots:
     void launchGame();
     void showRules();
     void level_up();
+    void drawPanel(int x, int y, int width, int height, QColor color, double opacity);
+    void gameOver();
+    void displayGameOverMenu();
 private:
     int level = 0;
 };
