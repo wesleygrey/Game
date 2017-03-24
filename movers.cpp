@@ -2,11 +2,12 @@
 #include <QTimer>
 #include <stdlib.h>
 #include <QList>
+#include "gametext.h"
+#include "game.h"
 
 extern Game* myGame;
 
-Bullet::Bullet()
-{
+Bullet::Bullet(){
     setRect(0,0,10,10);
     //connect a timer to the move() member function
     QTimer* bTimer = new QTimer;
@@ -14,9 +15,8 @@ Bullet::Bullet()
     bTimer->start(50);
 }
 
-void Bullet::move()
-{
-    //if bullet collides with enemy, delete both enemy and bullet
+void Bullet::move(){
+    //if bullet collides with enemy, delete both enemy and bullet, update the score
     QList<QGraphicsItem*> collision = collidingItems();
     for(size_t pos = 0; pos != collision.size(); ++pos){
         if(typeid(*(collision[pos])) == typeid(Enemy)){
@@ -26,6 +26,7 @@ void Bullet::move()
             return;
         }
     }
+    //delete the bullet when it leaves the view
     if(pos().y() < 0){
         delete this;
         return;
@@ -33,24 +34,24 @@ void Bullet::move()
     setPos(x(), y() - 10);
 }
 
-Enemy::Enemy()
-{
+Enemy::Enemy(){
     setRect(0,0,50,50);
+    //randomly spawn at the top of the screen
     int rand_num = rand() % 750;
     setPos(rand_num, 0);
     QTimer* eTimer = new QTimer;
     connect(eTimer, SIGNAL(timeout()), this, SLOT(move()));
     eTimer->start(100);
-
 }
 
-void Enemy::move()
-{
-    if(pos().y() > 800){
+void Enemy::move(){
+    //if enemy leaves view deduct health, delete enemy
+    if(pos().y() > myGame->sceneHeight){
         delete this;
         myGame->health->update();
         return;
     }
+    //or if enemy collides with player
     QList<QGraphicsItem*> collision = collidingItems();
     for(size_t pos = 0; pos != collision.size(); ++pos){
         if(typeid(*(collision[pos])) == typeid(Player)){
@@ -61,6 +62,7 @@ void Enemy::move()
     }
     setPos(x(), y()+5);
 }
+
 
 Coin::Coin(){
     setRect(0,0,20,20);
@@ -92,3 +94,6 @@ void Coin::move()
     }
     setPos(x()+ 10, y());
 }
+
+
+
