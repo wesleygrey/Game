@@ -171,3 +171,56 @@ void Game::level_up()
 {
     level++;
 }
+
+void Game::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
+{
+    //draw Panel starting at (x,y) with specified width and height
+    QGraphicsRectItem* panel = new QGraphicsRectItem(x,y,width,height);
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(color);
+    panel->setBrush(brush);
+    panel->setOpacity(opacity);
+    myScene->addItem(panel);
+}
+
+
+
+void Game::gameOver()
+{
+    level = 0;
+    numEnemies = 0;
+    //all settings return to original state
+    displayGameOverMenu();
+}
+
+void Game::displayGameOverMenu()
+{
+    //get rid of all scene items
+    for(size_t i = 0, n = myScene->items().size(); i < n; ++i){
+        myScene->items()[i]->setEnabled(false);
+    }
+
+    //display game over messages and ask if the user wants to play again or quit
+    drawPanel(0,0, sceneWidth, sceneHeight, Qt::black, 0.65);
+    drawPanel(sceneWidth/4, sceneHeight/4, sceneWidth/2, sceneHeight/2, Qt::gray, 1);
+
+    QGraphicsTextItem* gameOver = new QGraphicsTextItem;
+    gameOver->setFont(QFont("Helvetica", 20, 20));
+    gameOver->setPlainText("GAME OVER");
+    gameOver->setPos((sceneWidth/2) - (gameOver->boundingRect().width()/2), (sceneHeight/4) + (gameOver->boundingRect().height()));
+    myScene->addItem(gameOver);
+
+    Button* again = new Button(QString("Main Menu"));
+    again->setPos(((sceneWidth/2) - (again->boundingRect().width()/2)), ((sceneHeight/2) - (again->boundingRect().height())));
+    myScene->addItem(again);
+    connect(again, SIGNAL(clicked()), this, SLOT(displayMainMenu()));
+
+    Button* quit = new Button(QString("Quit"));
+    quit->setPos(((sceneWidth/2) - (quit->boundingRect().width()/2)), ((sceneHeight/2) + (quit->boundingRect().height())));
+    myScene->addItem(quit);
+    connect(quit, SIGNAL(clicked()), this, SLOT(close()));
+
+
+}
+
